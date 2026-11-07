@@ -228,9 +228,6 @@ Project4_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 Project4_SOURCE_DIR:STATIC=/Users/mayaparnes/Downloads/Project4-main/template
 
-//No help, variable specified on the command line.
-Python_EXECUTABLE:UNINITIALIZED=/Users/mayaparnes/.local/share/mamba/envs/ompl_env/bin/python3
-
 //The directory containing a CMake configuration file for ompl.
 ompl_DIR:PATH=/Users/mayaparnes/.local/share/mamba/envs/ompl_env/share/ompl/cmake
 

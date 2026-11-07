@@ -79,5 +79,5 @@ namespace ompl
         };
     }
 }
-
+#include "RG-RRT.cpp"
 #endif

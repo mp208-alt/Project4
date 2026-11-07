@@ -117,19 +117,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Project4Car
-
-# Build rule for target.
-Project4Car: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Project4Car
-.PHONY : Project4Car
-
-# fast build rule for target.
-Project4Car/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project4Car.dir/build.make CMakeFiles/Project4Car.dir/build
-.PHONY : Project4Car/fast
-
-#=============================================================================
 # Target rules for targets named Project4Pendulum
 
 # Build rule for target.
@@ -141,6 +128,19 @@ Project4Pendulum: cmake_check_build_system
 Project4Pendulum/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project4Pendulum.dir/build.make CMakeFiles/Project4Pendulum.dir/build
 .PHONY : Project4Pendulum/fast
+
+#=============================================================================
+# Target rules for targets named Project4Car
+
+# Build rule for target.
+Project4Car: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Project4Car
+.PHONY : Project4Car
+
+# fast build rule for target.
+Project4Car/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project4Car.dir/build.make CMakeFiles/Project4Car.dir/build
+.PHONY : Project4Car/fast
 
 src/Project4Car.o: src/Project4Car.cpp.o
 .PHONY : src/Project4Car.o

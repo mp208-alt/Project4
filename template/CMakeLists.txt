@@ -15,8 +15,8 @@ include_directories(
 
 link_directories(${OMPL_LIBRARY_DIRS})
 
-add_executable(Project4Car src/Project4Car.cpp)
-target_link_libraries(Project4Car ${OMPL_LIBRARIES})
-
 add_executable(Project4Pendulum src/Project4Pendulum.cpp)
 target_link_libraries(Project4Pendulum ${OMPL_LIBRARIES})
+
+add_executable(Project4Car src/Project4Car.cpp)
+target_link_libraries(Project4Car ${OMPL_LIBRARIES})
