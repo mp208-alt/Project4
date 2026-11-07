@@ -85,3 +85,26 @@ Info:    ProblemDefinition: Adding approximate solution from planner KPIECE1
 Info:    KPIECE1: Created 3446061 states in 1225837 cells (463770 internal + 762067 external)
 Info:    Preparing for run 7 of control_KPIECE1
 Info:    KPIECE1: Starting planning with 1 states already in datastructure
+Info:    ProblemDefinition: Adding approximate solution from planner KPIECE1
+Info:    KPIECE1: Created 3536623 states in 1254236 cells (477837 internal + 776399 external)
+Info:    Preparing for run 8 of control_KPIECE1
+Info:    KPIECE1: Starting planning with 1 states already in datastructure
+Info:    ProblemDefinition: Adding approximate solution from planner KPIECE1
+Info:    KPIECE1: Created 3633387 states in 1289488 cells (491521 internal + 797967 external)
+Info:    Preparing for run 9 of control_KPIECE1
+Info:    KPIECE1: Starting planning with 1 states already in datastructure
+Info:    KPIECE1: Created 124 states in 97 cells (2 internal + 95 external)
+Info:    Preparing for run 10 of control_KPIECE1
+Info:    KPIECE1: Starting planning with 1 states already in datastructure
+Info:    ProblemDefinition: Adding approximate solution from planner KPIECE1
+Info:    KPIECE1: Created 3761541 states in 1336440 cells (508011 internal + 828429 external)
+Info:    Preparing for run 11 of control_KPIECE1
+Info:    KPIECE1: Starting planning with 1 states already in datastructure
+Info:    KPIECE1: Created 269691 states in 95051 cells (36628 internal + 58423 external)
+Info:    Preparing for run 12 of control_KPIECE1
+Info:    KPIECE1: Starting planning with 1 states already in datastructure
+Info:    KPIECE1: Created 244451 states in 85497 cells (33244 internal + 52253 external)
+Info:    Preparing for run 13 of control_KPIECE1
+Info:    KPIECE1: Starting planning with 1 states already in datastructure
+Info:    ProblemDefinition: Adding approximate solution from planner KPIECE1
+Info:    KPIECE1: Created 3546763 states in 1265367 cells (478560 internal + 786807 external)
