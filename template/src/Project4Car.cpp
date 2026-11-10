@@ -83,7 +83,7 @@ void carODE(const oc::ODESolver::StateType &q, const oc::Control *u,
 
 void makeStreet(std::vector<Rectangle> &obstacles)
 {
-
+    // Street with narrow winding horizontal cooridor that opens to a wider turn before the goal
     obstacles.push_back({0.0, 0.0, 9.0, 0.5}); 
     obstacles.push_back({0.0, 1.5, 9.0, 3.0}); 
     obstacles.push_back({4.0, 6.0, 7.0, 1.0}); 
@@ -94,6 +94,8 @@ ompl::control::SimpleSetupPtr createCar(std::vector<Rectangle> &obstacles)
 {
     const double pi = M_PI;
     auto space = std::make_shared<ob::RealVectorStateSpace>(4);
+
+    //Set upper an lower bounds for car state
     ob::RealVectorBounds bounds(4);
     bounds.setLow(0, 0.0); 
     bounds.setHigh(0, 10.0); // x
@@ -110,7 +112,8 @@ ompl::control::SimpleSetupPtr createCar(std::vector<Rectangle> &obstacles)
     space->setBounds(bounds);
 
     space->registerProjection("CarProjection", std::make_shared<CarProjection>(space.get()));
-
+    
+    //Set upper and lower bounds for car control
     auto cspace = std::make_shared<oc::RealVectorControlSpace>(space, 2);
     ob::RealVectorBounds cbounds(2);
     cbounds.setLow(0, -pi / 2.0); 
@@ -133,6 +136,7 @@ ompl::control::SimpleSetupPtr createCar(std::vector<Rectangle> &obstacles)
         f->values[0] = s->values[0] + duration * qdot[0];
         f->values[1] = s->values[1] + duration * qdot[1];
 
+        // Clamp theta to [-pi, pi] to model car-like range
         double thetaClamped = s->values[2] + duration * qdot[2];
         while (thetaClamped >  pi) thetaClamped -= 2.0 * pi;
         while (thetaClamped < -pi) thetaClamped += 2.0 * pi;
@@ -155,6 +159,7 @@ ompl::control::SimpleSetupPtr createCar(std::vector<Rectangle> &obstacles)
         if (y < 0.0 || y > 10.0) return false;
         if (v < -3.0 || v > 3.0) return false;
 
+        // Approximating car-like robot as point for collision checking
         return isValidPoint(x, y, obstacles);
     });
 
