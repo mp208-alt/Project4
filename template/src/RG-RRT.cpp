@@ -55,6 +55,8 @@ ompl::control::RG_RRT::RG_RRT(const SpaceInformationPtr &si) : base::Planner(si,
 
     // Binding parameter to control count functions
     Planner::declareParam<double>("goal_bias", this, &RG_RRT::setGoalBias, &RG_RRT::getGoalBias, "0.:.05:1.");
+    Planner::declareParam<double>("control_number", this, &RG_RRT::setControlNumber, &RG_RRT::getControlNumber);
+    Planner::declareParam<double>("time_step", this, &RG_RRT::setTimeStep, &RG_RRT::getTimeStep);
     Planner::declareParam<int>("reachability_control_count", this, &RG_RRT::setControlNumber, &RG_RRT::getControlNumber);
     Planner::declareParam<bool>("intermediate_states", this, &RG_RRT::setIntermediateStates, &RG_RRT::getIntermediateStates, "0,1");
 }

@@ -18,6 +18,7 @@
 #include <ompl/control/planners/kpiece/KPIECE1.h>
 #include <ompl/geometric/PathGeometric.h>
 #include <Eigen/Core>
+#include <ompl/tools/benchmark/Benchmark.h>
 
 // The collision checker produced in project 2
 #include "CollisionChecking.h"
@@ -83,10 +84,10 @@ void carODE(const oc::ODESolver::StateType &q, const oc::Control *u,
 void makeStreet(std::vector<Rectangle> &obstacles)
 {
 
-
-    obstacles.push_back({0.0, 3.0, 6.0, 1.0}); 
-    obstacles.push_back({4.0, 6.0, 6.0, 1.0}); 
-    obstacles.push_back({0.0, 8.0, 6.0, 1.0}); 
+    obstacles.push_back({0.0, 0.0, 9.0, 0.5}); 
+    obstacles.push_back({0.0, 1.5, 9.0, 3.0}); 
+    obstacles.push_back({4.0, 6.0, 7.0, 1.0}); 
+    obstacles.push_back({0.0, 8.0, 7.0, 2.0}); 
 }
 
 ompl::control::SimpleSetupPtr createCar(std::vector<Rectangle> &obstacles)
@@ -178,7 +179,8 @@ void planCar(ompl::control::SimpleSetupPtr &ss, int choice)
         ss->setPlanner(std::make_shared<oc::RRT>(ss->getSpaceInformation()));
     else if (choice == 2)
         ss->setPlanner(std::make_shared<oc::KPIECE1>(ss->getSpaceInformation()));
-    // else if (choice == 3 ): do rg-rst
+    else if (choice == 3 )
+        ss->setPlanner(std::make_shared<oc::RG_RRT>(ss->getSpaceInformation()));
 
     ob::PlannerStatus solved = ss->solve(30.0);
 
@@ -195,9 +197,40 @@ void planCar(ompl::control::SimpleSetupPtr &ss, int choice)
     }
 }
 
-void benchmarkCar(ompl::control::SimpleSetupPtr & /* ss */)
+void benchmarkCar(ompl::control::SimpleSetupPtr &ss)
 {
-    // TODO: Do some benchmarking for the car
+        ss->setup();
+        ompl::tools::Benchmark b(*ss, "Car Control Experiment");
+
+        b.addPlanner(std::make_shared<oc::RRT>(ss->getSpaceInformation()));
+        b.addPlanner(std::make_shared<oc::KPIECE1>(ss->getSpaceInformation()));
+
+        // RG-RRT with timestep 1 and 11 evenly-spaced control values (default)
+        auto rgrrt1 = std::make_shared<oc::RG_RRT>(ss->getSpaceInformation());
+        b.addPlanner(std::make_shared<oc::RG_RRT>(ss->getSpaceInformation()));
+        rgrrt1->setName("RG_RRT (Controls = 11, TimeStep = 1)");
+        b.addPlanner(rgrrt1);
+
+        // RG-RRT with higher number of controls within the range
+        auto rgrrt2 = std::make_shared<oc::RG_RRT>(ss->getSpaceInformation());
+        rgrrt2->params().setParam("control_number", "110");
+        rgrrt2->setName("RG_RRT (Controls = 110)");
+        b.addPlanner(rgrrt2);
+
+        // RG-RRT with larger time period
+        auto rgrrt3 = std::make_shared<oc::RG_RRT>(ss->getSpaceInformation());
+        rgrrt3->params().setParam("time_step", "10");
+        rgrrt3->setName("RG_RRT (TimeStep = 10)");
+        b.addPlanner(rgrrt3);
+
+        ompl::tools::Benchmark::Request req;
+        req.maxTime = 10.0;
+        req.maxMem = 4096.0;
+        req.runCount = 20;
+        req.displayProgress = true;
+
+        b.benchmark(req);
+        b.saveResultsToFile("car_benchmark.log");
 }
 
 int main(int argc, char **argv)
