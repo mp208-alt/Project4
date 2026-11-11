@@ -4,6 +4,8 @@ project(Project4 CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+
 find_package(ompl REQUIRED)
 find_package(Eigen3 REQUIRED)
 
