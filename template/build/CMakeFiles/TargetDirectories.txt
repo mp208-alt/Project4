@@ -1,4 +1,0 @@
-/Users/mayaparnes/Downloads/Project4-main/template/build/CMakeFiles/Project4Pendulum.dir
-/Users/mayaparnes/Downloads/Project4-main/template/build/CMakeFiles/Project4Car.dir
-/Users/mayaparnes/Downloads/Project4-main/template/build/CMakeFiles/edit_cache.dir
-/Users/mayaparnes/Downloads/Project4-main/template/build/CMakeFiles/rebuild_cache.dir
