@@ -1,8 +1,10 @@
 micromamba activate ompl_env
 
 To build:
+```
     cd template
     make
+```
 
 To run:
     ./Project4Pendulum <torque_mode> <planner_type>
