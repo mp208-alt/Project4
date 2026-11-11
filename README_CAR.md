@@ -18,3 +18,6 @@ To run:
 To export the solution paths for visualization:
     ./Project4Car 1 > path_car_rrt.txt
     ./Project4Car 2 > path_car_kpiece.txt
+
+For interactive use:
+    run `./Project4Car` with no arguments. You will be able to select between planning (and select which planner) and general benchmarking mode.
