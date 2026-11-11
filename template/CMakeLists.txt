@@ -18,5 +18,5 @@ link_directories(${OMPL_LIBRARY_DIRS})
 add_executable(Project4Pendulum src/Project4Pendulum.cpp)
 target_link_libraries(Project4Pendulum ${OMPL_LIBRARIES})
 
-add_executable(Project4Car src/Project4Car.cpp)
+add_executable(Project4Car src/Project4Car.cpp src/CollisionChecking.cpp)
 target_link_libraries(Project4Car ${OMPL_LIBRARIES})
