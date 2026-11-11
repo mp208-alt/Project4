@@ -55,12 +55,14 @@ public:
 };
 
 
-void carODE(const oc::ODESolver::StateType &q, const oc::Control *u,
-            oc::ODESolver::StateType &qdot)
+void carODE(const oc::ODESolver::StateType &q, const oc::Control *u, oc::ODESolver::StateType &qdot)
 {
+    // Define car dynamics for q = (x, y, theta, v) and u = (omega, vdot)
     qdot.resize(q.size(), 0.0);
 
     double omega = 0.0, v_dot = 0.0;
+
+
     if (u)
     {
         const auto *control = u->as<oc::RealVectorControlSpace::ControlType>();
@@ -107,7 +109,7 @@ ompl::control::SimpleSetupPtr createCar(std::vector<Rectangle> &obstacles)
     bounds.setHigh(2, pi);  // theta    
 
     bounds.setLow(3, -3.0); 
-    bounds.setHigh(3, 3.0); // v 
+    bounds.setHigh(3, 3.0); // v (car velocity)
 
     space->setBounds(bounds);
 
@@ -117,9 +119,9 @@ ompl::control::SimpleSetupPtr createCar(std::vector<Rectangle> &obstacles)
     auto cspace = std::make_shared<oc::RealVectorControlSpace>(space, 2);
     ob::RealVectorBounds cbounds(2);
     cbounds.setLow(0, -pi / 2.0); 
-    cbounds.setHigh(0, pi / 2.0); // omega
+    cbounds.setHigh(0, pi / 2.0); // omega (angular steering velocity)
     cbounds.setLow(1, -2.0); 
-    cbounds.setHigh(1, 2.0); // vdot
+    cbounds.setHigh(1, 2.0); // vdot (car acceleration)
 
     cspace->setBounds(cbounds);
 
@@ -204,38 +206,39 @@ void planCar(ompl::control::SimpleSetupPtr &ss, int choice)
 
 void benchmarkCar(ompl::control::SimpleSetupPtr &ss)
 {
-        ss->setup();
-        ompl::tools::Benchmark b(*ss, "Car Control Experiment");
+    ss->setup();
+    ompl::tools::Benchmark b(*ss, "Car Control Experiment");
 
-        b.addPlanner(std::make_shared<oc::RRT>(ss->getSpaceInformation()));
-        b.addPlanner(std::make_shared<oc::KPIECE1>(ss->getSpaceInformation()));
 
-        // RG-RRT with timestep 1 and 11 evenly-spaced control values (default)
-        auto rgrrt1 = std::make_shared<oc::RG_RRT>(ss->getSpaceInformation());
-        b.addPlanner(std::make_shared<oc::RG_RRT>(ss->getSpaceInformation()));
-        rgrrt1->setName("RG_RRT (Controls = 11, TimeStep = 1)");
-        b.addPlanner(rgrrt1);
+    b.addPlanner(std::make_shared<oc::RRT>(ss->getSpaceInformation()));
+    b.addPlanner(std::make_shared<oc::KPIECE1>(ss->getSpaceInformation()));
 
-        // RG-RRT with higher number of controls within the range
-        auto rgrrt2 = std::make_shared<oc::RG_RRT>(ss->getSpaceInformation());
-        rgrrt2->params().setParam("control_number", "110");
-        rgrrt2->setName("RG_RRT (Controls = 110)");
-        b.addPlanner(rgrrt2);
+    // RG-RRT with timestep 1 and 11 evenly-spaced control values (default)
+    auto rgrrt1 = std::make_shared<oc::RG_RRT>(ss->getSpaceInformation());
+    b.addPlanner(std::make_shared<oc::RG_RRT>(ss->getSpaceInformation()));
+    rgrrt1->setName("RG_RRT (Controls = 11, TimeStep = 1)");
+    b.addPlanner(rgrrt1);
 
-        // RG-RRT with larger time period
-        auto rgrrt3 = std::make_shared<oc::RG_RRT>(ss->getSpaceInformation());
-        rgrrt3->params().setParam("time_step", "10");
-        rgrrt3->setName("RG_RRT (TimeStep = 10)");
-        b.addPlanner(rgrrt3);
+    // RG-RRT with higher number of controls within the range
+    auto rgrrt2 = std::make_shared<oc::RG_RRT>(ss->getSpaceInformation());
+    rgrrt2->params().setParam("control_number", "110");
+    rgrrt2->setName("RG_RRT (Controls = 110)");
+    b.addPlanner(rgrrt2);
 
-        ompl::tools::Benchmark::Request req;
-        req.maxTime = 10.0;
-        req.maxMem = 4096.0;
-        req.runCount = 20;
-        req.displayProgress = true;
 
-        b.benchmark(req);
-        b.saveResultsToFile("car_benchmark.log");
+    // RG-RRT with larger time period
+    auto rgrrt3 = std::make_shared<oc::RG_RRT>(ss->getSpaceInformation());
+    rgrrt3->params().setParam("time_step", "10");
+    rgrrt3->setName("RG_RRT (TimeStep = 10)");
+    b.addPlanner(rgrrt3);
+    ompl::tools::Benchmark::Request req;
+    req.maxTime = 10.0;
+    req.maxMem = 4096.0;
+    req.runCount = 20;
+    req.displayProgress = true;
+
+    b.benchmark(req);
+    b.saveResultsToFile("car_benchmark.log");
 }
 
 int main(int argc, char **argv)
