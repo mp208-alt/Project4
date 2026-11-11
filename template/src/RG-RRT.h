@@ -1,5 +1,11 @@
-#ifndef RG_RRT_H
-#define RG_RRT_H
+///////////////////////////////////////
+// COMP/ELEC/MECH 450/550
+// Project 4
+// Authors: Maya Parnes and Timothy Slater
+//////////////////////////////////////
+
+#ifndef RGRRT_H
+#define RGRRT_H
 
 #include "ompl/base/Planner.h"
 #include "ompl/control/SpaceInformation.h"
